@@ -1,18 +1,17 @@
-﻿using cat.itb.restore_CoboAlvaro.empDAO;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace cat.itb.gestioHR.depDAO
+namespace cat.itb.restore_CoboAlvaro.empDAO
 {
-    public class FileEmployeeImpl : EmployeeDAO
+    public class FileEmployeeImpl : IEmployeeDAO
     {
         public void DeleteAll()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void InsertAll(List<Employee> deps)
         {
-            FileInfo file = new FileInfo("../../../../employees.json");
+            FileInfo file = new FileInfo("../../../employees.json");
             StreamWriter sw = file.CreateText();
             try
             {
@@ -32,7 +31,7 @@ namespace cat.itb.gestioHR.depDAO
 
         public List<Employee> SelectAll()
         {
-            FileInfo file = new FileInfo("../../../../departments.json");
+            FileInfo file = new FileInfo("../../../employees.json");
             StreamReader sr = file.OpenText();
 
             string emp;
@@ -48,22 +47,22 @@ namespace cat.itb.gestioHR.depDAO
 
         public Employee Select(int empID)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public bool Insert(Employee emp)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public bool Delete(int empID)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public bool Update(Employee emp)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

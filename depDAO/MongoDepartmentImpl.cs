@@ -1,11 +1,10 @@
 ﻿using cat.itb.restore_CoboAlvaro.connections;
-using cat.itb.restore_CoboAlvaro.empDAO;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 
 namespace cat.itb.restore_CoboAlvaro.depDAO
 {
-    public class MongoDepartmentImpl : DepartmentDAO
+    public class MongoDepartmentImpl : IDepartmentDAO
     {
         private static readonly IMongoDatabase database = MongoConnection.GetDatabase("itb");
         private static readonly IMongoCollection<Department> collection = database.GetCollection<Department>("departments");
@@ -25,10 +24,10 @@ namespace cat.itb.restore_CoboAlvaro.depDAO
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("\nCollection departments inserted");
             }
-            catch
+            catch (Exception ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Collection couldn't be inserted");
+                Console.WriteLine($"Collection couldn't be inserted {ex.Message}");
             }
 
             Console.ResetColor();
@@ -57,10 +56,10 @@ namespace cat.itb.restore_CoboAlvaro.depDAO
                 Console.WriteLine("\nDepartments inserted");
                 isSuccessful = true;
             }
-            catch
+            catch (Exception ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Collection couldn't be inserted");
+                Console.WriteLine($"Collection couldn't be inserted {ex.Message}");
                 isSuccessful = false;
             }
             Console.ResetColor();

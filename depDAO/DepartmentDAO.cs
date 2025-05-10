@@ -1,6 +1,6 @@
 ﻿namespace cat.itb.restore_CoboAlvaro.depDAO
 {
-    public interface DepartmentDAO
+    public interface IDepartmentDAO
     {
         void DeleteAll();
         void InsertAll(List<Department> deps);

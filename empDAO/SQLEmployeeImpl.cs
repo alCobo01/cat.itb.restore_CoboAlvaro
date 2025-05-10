@@ -1,11 +1,10 @@
 ﻿using cat.itb.restore_CoboAlvaro.connections;
 using cat.itb.restore_CoboAlvaro.depDAO;
-using cat.itb.restore_CoboAlvaro.empDAO;
 using Npgsql;
 
-namespace cat.itb.gestioHR.depDAO
+namespace cat.itb.restore_CoboAlvaro.empDAO
 {
-    public class SQLEmployeeImpl : EmployeeDAO
+    public class SQLEmployeeImpl : IEmployeeDAO
     {
         private NpgsqlConnection conn;
 
@@ -87,10 +86,10 @@ namespace cat.itb.gestioHR.depDAO
                     _id = dr.GetInt32(0),
                     Surname = dr.GetString(1),
                     Job = dr.GetString(2),
-                    ManagerID = dr.GetInt32(3),
-                    StartDate = dr.GetString(4),
+                    ManagerID = dr.IsDBNull(3) ? null : dr.GetInt32(3),
+                    StartDate = dr.GetDateTime(4),
                     Salary = dr.GetDouble(5),
-                    Comission = dr.GetDouble(6),
+                    Comission = dr.IsDBNull(6) ? null : dr.GetDouble(6),
                     DepartmentID = dr.GetInt32(7)
                 };
 
@@ -115,10 +114,10 @@ namespace cat.itb.gestioHR.depDAO
                 employee._id = dr.GetInt32(0);
                 employee.Surname = dr.GetString(1);
                 employee.Job = dr.GetString(2);
-                employee.ManagerID = dr.GetInt32(3);
-                employee.StartDate = dr.GetString(4);
+                employee.ManagerID = dr.IsDBNull(3) ? null : dr.GetInt32(3);
+                employee.StartDate = dr.GetDateTime(4);
                 employee.Salary = dr.GetDouble(5);
-                employee.Comission = dr.GetDouble(6);
+                employee.Comission = dr.IsDBNull(6) ? null : dr.GetDouble(6);
                 employee.DepartmentID = dr.GetInt32(7);
             }
             else
@@ -142,10 +141,10 @@ namespace cat.itb.gestioHR.depDAO
             cmd.Parameters.AddWithValue("_id", emp._id);
             cmd.Parameters.AddWithValue("surname", emp.Surname);
             cmd.Parameters.AddWithValue("job", emp.Job);
-            cmd.Parameters.AddWithValue("managerId", emp.ManagerID);
+            cmd.Parameters.AddWithValue("managerId", emp.ManagerID == null ? DBNull.Value : emp.ManagerID);
             cmd.Parameters.AddWithValue("startdate", emp.StartDate);
             cmd.Parameters.AddWithValue("salary", emp.Salary);
-            cmd.Parameters.AddWithValue("comission", emp.Comission);
+            cmd.Parameters.AddWithValue("comission", emp.Comission == null ? DBNull.Value : emp.Comission);
             cmd.Parameters.AddWithValue("depID", emp.DepartmentID);
             cmd.Prepare();
 
@@ -199,16 +198,16 @@ namespace cat.itb.gestioHR.depDAO
             SQLConnection db = new SQLConnection();
             conn = db.GetConnection();
 
-            NpgsqlCommand cmd = new NpgsqlCommand("UPDATE employees SET surname = @surname, job = @job, managerId = @managerId, startdate = @startdate, salary = @salary, comission = @comission, depID = @depID WHERE _id = @_id", conn);
+            NpgsqlCommand cmd = new NpgsqlCommand("UPDATE employees SET surname = @surname, job = @job, managerId = @managerId, startdate = @startdate, salary = @salary, commission = @comission, depID = @depID WHERE _id = @_id", conn);
             bool isSuccessful;
 
             cmd.Parameters.AddWithValue("_id", emp._id);
             cmd.Parameters.AddWithValue("surname", emp.Surname);
             cmd.Parameters.AddWithValue("job", emp.Job);
-            cmd.Parameters.AddWithValue("managerId", emp.ManagerID);
+            cmd.Parameters.AddWithValue("managerId", emp.ManagerID == null ? DBNull.Value : emp.ManagerID);
             cmd.Parameters.AddWithValue("startdate", emp.StartDate);
             cmd.Parameters.AddWithValue("salary", emp.Salary);
-            cmd.Parameters.AddWithValue("comission", emp.Comission);
+            cmd.Parameters.AddWithValue("comission", emp.Comission == null ? DBNull.Value : emp.Comission);
             cmd.Parameters.AddWithValue("depID", emp.DepartmentID);
 
             cmd.Prepare();

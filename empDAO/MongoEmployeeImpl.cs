@@ -1,12 +1,11 @@
 ﻿using cat.itb.restore_CoboAlvaro.connections;
-using cat.itb.restore_CoboAlvaro.empDAO;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using System.Runtime.Intrinsics.Arm;
 
-namespace cat.itb.gestioHR.depDAO
+namespace cat.itb.restore_CoboAlvaro.empDAO
 {
-   public class MongoEmployeeImpl : EmployeeDAO
+   public class MongoEmployeeImpl : IEmployeeDAO
    {
         private static readonly IMongoDatabase database = MongoConnection.GetDatabase("itb");
         private static readonly IMongoCollection<Employee> collection = database.GetCollection<Employee>("employees");
@@ -26,10 +25,10 @@ namespace cat.itb.gestioHR.depDAO
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("\nCollection employees inserted");
             }
-            catch
+            catch (Exception ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Collection couldn't be inserted");
+                Console.WriteLine($"Collection couldn't be inserted: {ex.Message}");
             }
 
             Console.ResetColor();
@@ -37,13 +36,13 @@ namespace cat.itb.gestioHR.depDAO
 
         public List<Employee> SelectAll()
         {
-            return collection.AsQueryable<Employee>().ToList();
+            return collection.AsQueryable().ToList();
         }
 
 
         public Employee Select(int depId)
         {
-            return collection.AsQueryable<Employee>()
+            return collection.AsQueryable()
                     .Where(d => d._id == depId)
                     .Single();
         }
@@ -51,7 +50,6 @@ namespace cat.itb.gestioHR.depDAO
         public bool Insert(Employee dep)
         {
             bool isSuccessful;
-
             try
             {
                 collection.InsertOne(dep);
@@ -59,10 +57,10 @@ namespace cat.itb.gestioHR.depDAO
                 Console.WriteLine("\n Employees inserted");
                 isSuccessful = true;
             }
-            catch
+            catch (Exception ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Employees couldn't be inserted");
+                Console.WriteLine($"Employees couldn't be inserted: {ex.Message}");
                 isSuccessful = false;
             }
             Console.ResetColor();

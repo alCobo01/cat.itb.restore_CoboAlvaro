@@ -2,7 +2,7 @@
 
 namespace cat.itb.restore_CoboAlvaro.depDAO
 {
-    public class FileDepartmentImpl : DepartmentDAO
+    public class FileDepartmentImpl : IDepartmentDAO
     {
         public void DeleteAll()
         {
@@ -11,7 +11,7 @@ namespace cat.itb.restore_CoboAlvaro.depDAO
 
         public void InsertAll(List<Department> deps)
         {
-            FileInfo file = new FileInfo("../../../../departments.json");
+            FileInfo file = new FileInfo("../../../departments.json");
             StreamWriter sw = file.CreateText();
             try
             {
@@ -31,7 +31,7 @@ namespace cat.itb.restore_CoboAlvaro.depDAO
 
         public List<Department> SelectAll()
         {
-            FileInfo file = new FileInfo("../../../../departments.json");
+            FileInfo file = new FileInfo("../../../departments.json");
             StreamReader sr = file.OpenText();
             string dept;
             List<Department> list = new List<Department>();

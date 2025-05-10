@@ -1,6 +1,6 @@
 ﻿namespace cat.itb.restore_CoboAlvaro.empDAO
 {
-    public interface EmployeeDAO
+    public interface IEmployeeDAO
     {
         void DeleteAll();
         void InsertAll(List<Employee> emps);

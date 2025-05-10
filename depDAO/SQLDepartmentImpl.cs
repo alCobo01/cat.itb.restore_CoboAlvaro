@@ -3,7 +3,7 @@ using Npgsql;
 
 namespace cat.itb.restore_CoboAlvaro.depDAO
 {
-    public class SQLDepartmentImpl : DepartmentDAO
+    public class SQLDepartmentImpl : IDepartmentDAO
     {
         
         private NpgsqlConnection conn;
